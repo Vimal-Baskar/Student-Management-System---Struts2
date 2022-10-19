@@ -1,0 +1,38 @@
+{
+	"studentCrud":
+	{
+		"name" : 
+			{
+				"mandatory" : true,
+				"editable" : true,
+				"dataType" : "Text",
+				"min-length" : 1,
+				"max-length" : 50 
+			},
+		"dob" : 
+			{
+				"mandatory" : true,
+				"editable" : true,
+				"dataType" : "Text",
+				"min-length" : 10,
+				"max-length" : 10 
+			},
+		"mobile" : 
+			{
+				"mandatory" : false,
+				"editable" : true,
+				"dataType" : "String",	
+				"min-length" : 5,
+				"max-length" : 15 		
+			},
+		"email" : 
+			{
+				"mandatory" : true,
+				"editable" : true,
+				"dataType" : "Text",
+				"min-length" : 5,
+				"max-length" : 100 
+			}
+	}
+	
+}
