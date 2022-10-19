@@ -52,7 +52,7 @@ public class GenericValidation
 			{
 				dataType = "Integer";
 			}
-			if(((boolean)metaData.optBoolean("mandatory")) && (eachField.get(obj).equals("") || eachField.get(obj).equals(null))) 
+			if(((boolean)metaData.optBoolean("mandatory")) && (eachField.get(obj)==null || eachField.get(obj).equals(""))) 
 			{
 				throw new GenericException("MANDATORY_NOT_FOUND","Mandatory field not found",fields,"ERROR");	
 			}
