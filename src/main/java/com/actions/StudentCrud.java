@@ -41,7 +41,8 @@ public class StudentCrud implements CrudHandler{
 			response.put("students", new JSONArray(dbResponse));
 			return response;
 		}
-		catch(NoSuchFieldException e) {
+		catch(NoSuchFieldException e) 
+		{
 			e.printStackTrace();
 			try
 			{
@@ -110,6 +111,28 @@ public class StudentCrud implements CrudHandler{
 				e1.printStackTrace();
 			}
 		}
+		catch(NoSuchFieldException e) {
+			e.printStackTrace();
+			try
+			{
+				JSONObject fields = new JSONObject();
+				fields.put("fields",e.getMessage());
+				throw new GenericException("FIELD_NOT_FOUND_ERROR", "Not able to find the field", fields, "ERROR",400);
+			}
+			catch(GenericException except) 
+			{
+				try 
+				{
+					return new JSONObject(except.getMessage());
+				} 
+				catch (JSONException e1) 
+				{
+					e1.printStackTrace();
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 		catch(Exception e) {
 			e.printStackTrace();
 			try 
@@ -159,7 +182,31 @@ public class StudentCrud implements CrudHandler{
 			{
 				e1.printStackTrace();
 			}
-		} catch (Exception e) {
+		} 
+		catch(NoSuchFieldException e) 
+		{
+			e.printStackTrace();
+			try
+			{
+				JSONObject fields = new JSONObject();
+				fields.put("fields",e.getMessage());
+				throw new GenericException("FIELD_NOT_FOUND_ERROR", "Not able to find the field", fields, "ERROR",400);
+			}
+			catch(GenericException except) 
+			{
+				try 
+				{
+					return new JSONObject(except.getMessage());
+				} 
+				catch (JSONException e1) 
+				{
+					e1.printStackTrace();
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			try 
 			{
@@ -202,6 +249,29 @@ public class StudentCrud implements CrudHandler{
 			try {
 				return new JSONObject(e.getMessage());
 			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+		}
+		catch(NoSuchFieldException e) 
+		{
+			e.printStackTrace();
+			try
+			{
+				JSONObject fields = new JSONObject();
+				fields.put("fields",e.getMessage());
+				throw new GenericException("FIELD_NOT_FOUND_ERROR", "Not able to find the field", fields, "ERROR",400);
+			}
+			catch(GenericException except) 
+			{
+				try 
+				{
+					return new JSONObject(except.getMessage());
+				} 
+				catch (JSONException e1) 
+				{
+					e1.printStackTrace();
+				}
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
