@@ -1,19 +1,17 @@
 package com.interceptors;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.db.DBConnection;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
-import com.opensymphony.xwork2.util.ValueStack;
 
 public class DBInterceptor implements Interceptor 
 {
 
-//	private Object db = null;
+private static final long serialVersionUID = 1L;
+
+	//	private Object db = null;
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
