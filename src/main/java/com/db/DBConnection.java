@@ -8,14 +8,16 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	static private Connection connect = null;
+	private String user = "root";
+	private String password = "root";
 	
 	public void setConnection() throws SQLException{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connect = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true",
-					"root",
-					""
+					user,
+					password
 					);
 			System.out.println("Checking for database ...");
 			if(!checkDatabaseExists())
@@ -25,8 +27,8 @@ public class DBConnection {
 			}
 			connect = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/school?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true",
-							"root",
-							""
+							user,
+							password
 							);
 			System.out.println("Checking for table ...");
 			if(!checkTableExists())
