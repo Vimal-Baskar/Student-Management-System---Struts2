@@ -42,7 +42,14 @@ public class GenericValidation
 			eachField = obj.getClass().getDeclaredField(currIndex);
 			eachField.setAccessible(true);
 			JSONObject fields = new JSONObject();
-			fields.put(currIndex,eachField.get(obj));
+			if(eachField.get(obj)==null) 
+			{
+				fields.put(currIndex,"");
+			}
+			else 
+			{
+				fields.put(currIndex,eachField.get(obj));
+			}
 			String dataType = (String) metaData.opt("dataType");
 			if(dataType.equals("Text"))
 			{
@@ -54,23 +61,23 @@ public class GenericValidation
 			}
 			if(((boolean)metaData.optBoolean("mandatory")) && (eachField.get(obj)==null || eachField.get(obj).equals(""))) 
 			{
-				throw new GenericException("MANDATORY_NOT_FOUND","Mandatory field not found",fields,"ERROR");	
+				throw new GenericException("MANDATORY_NOT_FOUND","Mandatory field not found",fields,"ERROR",400);	
 			}
 			else if(!(boolean)(metaData.optBoolean("editable"))) 
 			{
-				throw new GenericException("NOT_EDITABLE","field cannot be edited",fields,"ERROR");
+				throw new GenericException("NOT_EDITABLE","field cannot be edited",fields,"ERROR",400);
 			}
-			else if(!dataType.equals(eachField.get(obj).getClass().getSimpleName()))
+			else if(eachField.get(obj)!=null && !dataType.equals(eachField.get(obj).getClass().getSimpleName()))
 			{
-				throw new GenericException("DATA_TYPE_NOT_SUPPORTED","data type should be of type "+metaData.opt("dataType"),fields,"ERROR");
+				throw new GenericException("DATA_TYPE_NOT_SUPPORTED","data type should be of type "+metaData.opt("dataType"),fields,"ERROR",400);
 			}
-			else if((int)metaData.opt("min-length")>((String)eachField.get(obj)).length())
+			else if(eachField.get(obj)!=null && (int)metaData.opt("min-length")>((String)eachField.get(obj)).length())
 			{
-				throw new GenericException("MIN_LENGTH_LIMIT_NOT_REACHED","field should be of minimum length of "+metaData.opt("min-length"),fields,"ERROR");
+				throw new GenericException("MIN_LENGTH_LIMIT_NOT_REACHED","field should be of minimum length of "+metaData.opt("min-length"),fields,"ERROR",400);
 			}
-			else if((int)metaData.opt("max-length")<((String)eachField.get(obj)).length())
+			else if(eachField.get(obj)!=null && (int)metaData.opt("max-length")<((String)eachField.get(obj)).length())
 			{
-				throw new GenericException("MAX_LENGTH_LIMIT_EXCEEDED","field should be of maximum length of"+metaData.opt("max-length"),fields,"ERROR");
+				throw new GenericException("MAX_LENGTH_LIMIT_EXCEEDED","field should be of maximum length of"+metaData.opt("max-length"),fields,"ERROR",400);
 			}
 		}
 	}

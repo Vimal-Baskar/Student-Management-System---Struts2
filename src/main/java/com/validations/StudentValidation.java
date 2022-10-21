@@ -24,25 +24,25 @@ public class StudentValidation
 		String[] dobSplit = dob.split("-");
 		Pattern pattern = Pattern.compile("[0-9]*");
 		JSONObject fields = new JSONObject();
-		if(dobSplit.length != 3 || checkValidStudentDate(dobSplit)) {
+		if(dobSplit.length != 3 || !checkValidStudentDate(dobSplit)) {
 			fields.put("dob",dob);
-			throw new GenericException("INVALID DATA","Enter a valid date for this field",fields,"ERROR");
+			throw new GenericException("INVALID DATA","Enter a valid date for this field",fields,"ERROR",422);
 		}
-		else if(!pattern.matcher(mobile).matches())
+		else if(mobile!=null && !pattern.matcher(mobile).matches())
 		{
 			fields.put("mobile",mobile);
-			throw new GenericException("INVALID DATA","Enter a valid mobile number for this field",fields,"ERROR");
+			throw new GenericException("INVALID DATA","Enter a valid mobile number for this field",fields,"ERROR",422);
 		}
 		else if(!email.endsWith("@zoho.com")) {
 			fields.put("email",email);
-			throw new GenericException("INVALID DATA","Enter a valid email for this field",fields,"ERROR");
+			throw new GenericException("INVALID DATA","Enter a valid email for this field",fields,"ERROR",422);
 		}
 		JSONObject json = new JSONObject();
 		json.put("email", email);
 		ArrayList<Object> field = dataAlreadyExists(json);
 		if(field.size()!=0) {
 			fields.put("id", new JSONArray(field));
-			throw new GenericException("DATA_ALREADY_EXISTS","User mail id already exists",fields,"ERROR");
+			throw new GenericException("DATA_ALREADY_EXISTS","User mail id already exists",fields,"ERROR",409);
 		}
 	}
 	
@@ -52,7 +52,7 @@ public class StudentValidation
 		ArrayList<Object> field = dataAlreadyExists(PojoConvertor.convertPojoToJSON(student1));
 		fields.put("id", new JSONArray(field));
 		if(field.size()>1) {
-			throw new GenericException("DATA_ALREADY_EXISTS","User mail id already exists",fields,"ERROR");
+			throw new GenericException("DATA_ALREADY_EXISTS","User mail id already exists",fields,"ERROR",409);
 		}
 		insertionValidation(student);
 		return fields;
@@ -64,7 +64,7 @@ public class StudentValidation
 		JSONObject fields = new JSONObject();
 		if(field.size()==0) 
 		{
-			throw new GenericException("INVALID DATA","No user exists",fields,"ERROR");
+			throw new GenericException("INVALID DATA","No user exists",fields,"ERROR",204);
 		}
 		else {
 			fields.put("id", new JSONArray(field));
@@ -74,8 +74,7 @@ public class StudentValidation
 	
 	public static boolean checkValidStudentDate(String[] dobSplit)
 	{
-		return Integer.parseInt(dobSplit[0])>2000 && Integer.parseInt(dobSplit[0])>2002 && Integer.parseInt(dobSplit[1])<13 && Integer.parseInt(dobSplit[2])<32;
-		
+		return Integer.parseInt(dobSplit[0])>2000 && Integer.parseInt(dobSplit[0])<2004 && Integer.parseInt(dobSplit[1])<13 && Integer.parseInt(dobSplit[2])<32;		
 	}
 	
 	public static ArrayList<Object> dataAlreadyExists(JSONObject json) throws JSONException
