@@ -11,7 +11,7 @@ public class GenericException extends Exception
 	private JSONObject response = new JSONObject(); 
 	boolean isError = true;
 	
-	public GenericException(String code,String message, JSONObject fields,String status) 
+	public GenericException(String code,String message, JSONObject fields,String status,int status_code) 
 	{
 		JSONObject details = new JSONObject();
 		try
@@ -26,6 +26,7 @@ public class GenericException extends Exception
 			response.put("message", message);
 			response.put("details", details);
 			response.put("status", status);
+			response.put("status_code", status_code);
 		}
 		catch (JSONException e) 
 		{
