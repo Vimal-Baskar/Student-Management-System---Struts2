@@ -27,7 +27,7 @@ public class StudentCrud implements CrudHandler{
 	{
 		try 
 		{
-			student = (StudentPojo) JSONConvertor.convertJSONToPojo(json,student);
+			student = (StudentPojo)JSONConvertor.convertJSONToPojo(json,student);
 			mapping = PojoConvertor.convertPojoToMap("student", student);
 			List<Map<String,Object>> dbResponse =  DB.getData("student",mapping);
 			JSONObject response = new JSONObject();
