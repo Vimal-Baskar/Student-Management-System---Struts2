@@ -25,28 +25,33 @@ public class DB {
 		query.append(tableName);
 		query.append(" (");
 		values.append(" (");
-		int length = map.size(),count=0;
+		int count=0;
 		for (Map.Entry<String, Object> item : map.entrySet()) 
 		{
 			if(item.getValue()!=null) {
-				query.append(item.getKey());
-				if(DButil.isString(item.getValue()))
+				if(!DButil.isString(item.getValue()) && (int)item.getValue()!=0) {
+					if(count==1) 
+					{
+						query.append(" , ");
+						values.append(" , ");
+					}
+					query.append(item.getKey());
+					values.append(item.getValue());
+					count=1;
+				}
+				else if(DButil.isString(item.getValue()))
 				{
+					if(count==1) {
+						query.append(" , ");
+						values.append(" , ");
+					}
+					query.append(item.getKey());
 					values.append("'");
 					values.append(item.getValue());
-					values.append("'");
-				}
-				else
-				{
-					values.append(item.getValue());
+					values.append("'");	
+					count=1;
 				}
 			}
-			if(count!=length-1) 
-			{
-				query.append(",");
-				values.append(",");
-			}
-			count++;
 		}
 		query.append(") VALUES ");
 		values.append(");");
