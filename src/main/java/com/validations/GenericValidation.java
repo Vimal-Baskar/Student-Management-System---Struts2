@@ -2,6 +2,7 @@ package com.validations;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.Iterator;
@@ -15,10 +16,11 @@ import com.pojo.Pojo;
 public class GenericValidation
 {
 		
-	public static JSONObject validateData()
+	public static JSONObject validateData() throws ClassNotFoundException, URISyntaxException
 	{
 		try {
-			String validationData = new String(Files.readAllBytes(Paths.get("/home/zoho/Desktop/Java/student-management/src/main/java/com/validations/validations.json")), StandardCharsets.UTF_8);
+			System.out.println();
+			String validationData = new String(Files.readAllBytes(Paths.get(GenericValidation.class.getResource("validations.json").toURI())), StandardCharsets.UTF_8);
 			JSONObject json = new JSONObject(validationData);
 			return json;
 		} catch (IOException e) {
@@ -30,7 +32,7 @@ public class GenericValidation
 		return null;
 	}
 	
-	public static void validate(String className, Pojo obj) throws GenericException, IllegalAccessException, IllegalArgumentException, NoSuchFieldException, JSONException
+	public static void validate(String className, Pojo obj) throws GenericException, IllegalAccessException, IllegalArgumentException, NoSuchFieldException, JSONException, ClassNotFoundException, URISyntaxException
 	{
 		JSONObject data = new JSONObject();
 		data = validateData().optJSONObject(className);
