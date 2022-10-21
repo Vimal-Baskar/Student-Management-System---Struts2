@@ -35,9 +35,11 @@ public class Router extends ActionSupport implements ServletRequestAware, Servle
 		try 
 		{
 			JSONObject json = JSONConvertor.getAllParameters(request);
-			System.out.println(json);
 			responseJSON = new StudentCrud().get(json);
 			this.response.setContentType("application/json");
+			this.response.setStatus(responseJSON.optInt("status_code"));
+			responseJSON.remove("status_code");
+			System.out.println(responseJSON);
 			PrintWriter out = this.response.getWriter();
 			out.write(responseJSON.toString());
 		} 
@@ -52,9 +54,10 @@ public class Router extends ActionSupport implements ServletRequestAware, Servle
 		try 
 		{
 			JSONObject json = JSONConvertor.convertStringToJSON(request.getReader());
-			System.out.println(json);
 			responseJSON = new StudentCrud().post(json);
 			this.response.setContentType("application/json");
+			this.response.setStatus(responseJSON.optInt("status_code"));
+			responseJSON.remove("status_code");
 			PrintWriter out = this.response.getWriter();
 			out.write(responseJSON.toString());
 			Math.round(122.22);
@@ -72,9 +75,10 @@ public class Router extends ActionSupport implements ServletRequestAware, Servle
 			JSONObject json = new JSONObject();
 			json.put("data", JSONConvertor.convertStringToJSON(request.getReader()));
 			json.put("where", JSONConvertor.getAllParameters(request));
-			System.out.println(json);
 			responseJSON = new StudentCrud().put(json);
 			this.response.setContentType("application/json");
+			this.response.setStatus(responseJSON.optInt("status_code"));
+			responseJSON.remove("status_code");
 			PrintWriter out = this.response.getWriter();
 			out.write(responseJSON.toString());
 		}
@@ -88,9 +92,10 @@ public class Router extends ActionSupport implements ServletRequestAware, Servle
 		try 
 		{
 			JSONObject json = JSONConvertor.getAllParameters(request);
-			System.out.println(json);
 			responseJSON = new StudentCrud().delete(json);
 			this.response.setContentType("application/json");
+			this.response.setStatus(responseJSON.optInt("status_code"));
+			responseJSON.remove("status_code");
 			PrintWriter out = this.response.getWriter();
 			out.write(responseJSON.toString());
 		} 
