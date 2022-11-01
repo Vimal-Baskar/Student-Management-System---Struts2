@@ -9,7 +9,8 @@ import java.sql.SQLException;
 public class DBConnection {
 	static private Connection connect = null;
 	private String user = "root";
-	private String password = "root";
+	private String password = "";
+	private String[] tableName = {"student"};
 	
 	public void setConnection() throws SQLException{
 		try {
@@ -31,18 +32,19 @@ public class DBConnection {
 							password
 							);
 			System.out.println("Checking for table ...");
-			if(!checkTableExists())
+			for(int i=0;i<tableName.length;i++)
 			{
-				System.out.println("Creating tables environment ...");
-				createTable();
+				if(!checkTableExists(tableName[i]))
+				{
+					System.out.println("Creating tables environment ...");
+				}
+				else
+				{
+					connect.createStatement().executeUpdate("DROP TABLE "+tableName[i]);
+					System.out.println("Creating table environment ...");
+				}
 			}
-			else
-			{
-				System.out.println("Sry... Deleting existing table ...");
-				connect.createStatement().executeUpdate("DROP TABLE student");
-				System.out.println("Creating table environment ...");
-				createTable();
-			}
+			createTableStudent();
 			System.out.println("DB connected");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -65,11 +67,11 @@ public class DBConnection {
 		return false;
 	}
 		
-	private boolean checkTableExists() throws SQLException {
+	private boolean checkTableExists(String tableName) throws SQLException {
 		ResultSet rs = connect.createStatement().executeQuery("show tables;");
 		while(rs.next())
 		{
-			if(rs.getString(1).equals("student"))
+			if(rs.getString(1).equals(tableName))
 			{
 				return true;
 			}
@@ -77,7 +79,7 @@ public class DBConnection {
 		return false;
 	}
 	
-	private void createTable() throws SQLException
+	private void createTableStudent() throws SQLException
 	{
 		connect.createStatement().executeUpdate("CREATE TABLE student (student_id INT PRIMARY KEY AUTO_INCREMENT, student_name VARCHAR(50) NOT NULL, student_dob DATE NOT NULL, student_mobile VARCHAR(20) DEFAULT NULL, student_email VARCHAR(50) NOT NULL, CONSTRAINT unique_email UNIQUE (student_email));");
 	}
