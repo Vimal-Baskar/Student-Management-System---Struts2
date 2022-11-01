@@ -85,7 +85,7 @@ public class StudentValidation
 		array = getResponse.getJSONArray("students");
 		for(int i=0;i<array.length();i++) 
 		{
-			HashMap<Object,Object> eachJSON = (HashMap<Object, Object>) array.get(i);
+			HashMap<String,Object> eachJSON = (HashMap<String,Object>) array.get(i);
 			fields.add(eachJSON.get("student_id"));
 		}
 		return fields;
