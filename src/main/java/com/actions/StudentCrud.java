@@ -67,7 +67,8 @@ public class StudentCrud implements CrudHandler{
 		catch (Exception e) {
 			e.printStackTrace();
 			try 
-			{
+			{// TODO Auto-generated catch block
+				e.printStackTrace();
 				throw new GenericException("INTERNAL_SERVER_ERROR", "Something went wrong", new JSONObject(), "ERROR",500);
 			}
 			catch(GenericException except) 
@@ -89,8 +90,8 @@ public class StudentCrud implements CrudHandler{
 	public JSONObject delete(JSONObject json) 
 	{
 		try 
-		{			mapping.remove("student_id");
-
+		{			
+			mapping.remove("student_id");
 			student = (StudentPojo) JSONConvertor.convertJSONToPojo(json,student);
 			JSONObject fields = StudentValidation.getValidation(student);
 			mapping = PojoConvertor.convertPojoToMap("student", student);
