@@ -69,7 +69,8 @@ public class Router extends ActionSupport implements ServletRequestAware, Servle
 		
 	}
 	
-	public void put_students() {
+	public void put_students()
+	{
 		try 
 		{
 			JSONObject json = new JSONObject();
@@ -88,9 +89,11 @@ public class Router extends ActionSupport implements ServletRequestAware, Servle
 		}
 	}
 	
-	public void delete_students() {
+	public void delete_students() 
+	{
 		try 
 		{
+			
 			JSONObject json = JSONConvertor.getAllParameters(request);
 			responseJSON = new StudentCrud().delete(json);
 			this.response.setContentType("application/json");
@@ -105,32 +108,25 @@ public class Router extends ActionSupport implements ServletRequestAware, Servle
 		}
 	}
 	
-	public void get_marks() {
-		
+	public void post_login()
+	{
+		try 
+		{
+			JSONObject json = JSONConvertor.convertStringToJSON(request.getReader());
+			responseJSON = new LoginCrud().post(json);
+			this.response.setContentType("application/json");
+			this.response.setStatus(responseJSON.optInt("status_code"));
+			responseJSON.remove("status_code");
+			PrintWriter out = this.response.getWriter();
+			out.write(responseJSON.toString());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
+
 	
-	public void post_marks() {
-		
-	}
 	
-	public void put_marks() {
-		
-	}
-	
-	public void delete_marks() {
-		
-	}
-	
-	public void students() {
-		
-	}
-	
-	public void staff() {
-		
-	}
-	
-	public void marks() {
-		
-	}
 	
 }
