@@ -19,7 +19,6 @@ public class GenericValidation
 	public static JSONObject validateData() throws ClassNotFoundException, URISyntaxException
 	{
 		try {
-			System.out.println();
 			String validationData = new String(Files.readAllBytes(Paths.get(GenericValidation.class.getResource("validations.json").toURI())), StandardCharsets.UTF_8);
 			JSONObject json = new JSONObject(validationData);
 			return json;
