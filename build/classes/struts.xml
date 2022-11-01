@@ -9,7 +9,7 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
  	
  	<package name="default" extends="struts-default">
  		<interceptors>
- 		 	<interceptor name="dbInterceptor" class="com.interceptors.DBInterceptor"></interceptor> 		
+ 		 	<interceptor name="dbInterceptor" class="com.interceptors.DBInterceptor"></interceptor>		
  		 	<interceptor-stack name="myStack">
  		 	 	<interceptor-ref name="dbInterceptor"></interceptor-ref>
  		 	 	<interceptor-ref name="defaultStack"></interceptor-ref> 	
@@ -18,7 +18,8 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
  		<action name="students" class="com.routing.Router" method="students">
  			<interceptor-ref name="myStack"></interceptor-ref>
  		</action>
- 		<action name="staff" class="com.routing.Router" method="staff"/>
- 		<action name="marks" class="com.routing.Router" method="marks"/>
+ 		<action name="login" class="com.routing.Router" method="login">
+ 			<interceptor-ref name="myStack"></interceptor-ref>
+ 		</action>
  	</package>
 </struts>
