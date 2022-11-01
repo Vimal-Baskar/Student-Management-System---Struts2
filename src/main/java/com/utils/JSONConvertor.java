@@ -45,6 +45,7 @@ public class JSONConvertor {
 		stringRequest.append("{");
 		while(params.hasMoreElements()) {
 			String parameterName = (String) params.nextElement();
+//			response.put(parameterName,request.getParameter(parameterName));
             stringRequest.append(parameterName+" : ");
             if(request.getParameter(parameterName).indexOf(",")!=-1) 
             {
